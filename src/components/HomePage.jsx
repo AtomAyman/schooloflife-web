@@ -10,12 +10,12 @@ const carouselSlides = [
   },
   {
     label: 'Fishing Catch and Release',
-    description: 'Learning patience and technique on the lake — a core Sunnah-inspired skill.',
+    description: 'Learning patience and technique on the lake. A core Sunnah-inspired skill.',
     videoUrl: '/videos/Fishing.mp4',
   },
   {
     label: 'Preparing for Cooking',
-    description: 'Getting camp ready for outdoor cooking — setting up, prepping, and working together.',
+    description: 'Getting camp ready for outdoor cooking: setting up, prepping, and working together.',
     videoUrl: '/videos/GeetingReadytoCook.MOV',
   },
 ];

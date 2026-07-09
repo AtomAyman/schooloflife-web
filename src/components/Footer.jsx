@@ -20,7 +20,7 @@ export default function Footer({ setActiveTab }) {
 
             <div className="mt-6 border-t border-stone-700 pt-3 text-stone-400 text-xs">
               <span className="block font-bold">📆 Summer Session: July 10 - August 22</span>
-              <span className="block font-bold mt-1 text-campfire">🤝 Men 18+ &bull; Limited Seats</span>
+              <span className="block font-bold mt-1 text-campfire">🤝 Men 18+</span>
             </div>
           </div>
 
