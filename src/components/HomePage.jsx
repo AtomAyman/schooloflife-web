@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, TreePine, Compass, Mountain } from 'lucide-react';
 
-// Named clips with no emojis — titles reflect actual footage
+// Hero carousel — all field clips cycle in the background
 const carouselSlides = [
   {
     label: 'Kayaking on the Water',
@@ -18,9 +18,24 @@ const carouselSlides = [
     description: 'Campfire traditions — winding down the evening together around the fire.',
     videoUrl: '/videos/RoastingMarshmellows.MOV',
   },
+  {
+    label: 'Dock Dueling',
+    description: 'Testing balance, agility, and friendly competition out on the water.',
+    videoUrl: '/videos/DockDueling.mp4',
+  },
+  {
+    label: 'Fishing Catch and Release',
+    description: 'Learning patience and technique on the lake — a core Sunnah-inspired skill.',
+    videoUrl: '/videos/Fishing.mp4',
+  },
+  {
+    label: 'Preparing for Cooking',
+    description: 'Getting camp ready for outdoor cooking — setting up, prepping, and working together.',
+    videoUrl: '/videos/GeetingReadytoCook.MOV',
+  },
 ];
 
-// Snapshots carousel — named clips based on actual footage
+// Snapshots carousel — 6 core clips, vertical 9:16 format
 const snapshotClips = [
   {
     id: 1,
@@ -57,24 +72,6 @@ const snapshotClips = [
     title: 'Boating at Speed',
     category: 'Water Skills',
     videoUrl: '/videos/Boating.mov',
-  },
-  {
-    id: 7,
-    title: 'Dock Dueling',
-    category: 'Water Skills',
-    videoUrl: '/videos/DockDueling.mp4',
-  },
-  {
-    id: 8,
-    title: 'Fishing Catch and Release',
-    category: 'Outdoor Skills',
-    videoUrl: '/videos/Fishing.mp4',
-  },
-  {
-    id: 9,
-    title: 'Preparing for Cooking',
-    category: 'Outdoor Cooking',
-    videoUrl: '/videos/GeetingReadytoCook.MOV',
   },
 ];
 
