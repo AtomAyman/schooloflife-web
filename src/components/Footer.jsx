@@ -77,7 +77,17 @@ export default function Footer({ setActiveTab }) {
 
         <div className="flex flex-col sm:flex-row items-center justify-between text-stone-500 text-xs py-6 mt-4 border-t-2 border-stone-200 gap-3">
           <div className="flex flex-col sm:items-start gap-1">
-            <span>&copy; {new Date().getFullYear()} School of Life. A project of Windsor Islamic Association.</span>
+            <span>&copy; {new Date().getFullYear()} School of Life. A project of{' '}
+              <a
+                href="https://windsorislamicassociation.ca"
+                target="_blank"
+                rel="noreferrer"
+                className="underline hover:text-campfire transition-colors"
+              >
+                Windsor Islamic Association
+              </a>
+              .
+            </span>
             <span className="text-[9px] text-stone-400">All rights reserved.</span>
           </div>
           <span className="font-bold text-forest">Built for Brotherhood &amp; Sunnah-Centered Skills</span>

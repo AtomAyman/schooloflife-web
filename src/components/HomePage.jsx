@@ -6,17 +6,17 @@ const carouselSlides = [
   {
     label: 'Kayaking on the Water',
     description: 'Windsor Waterfront Lakes, focusing on paddle control, capsize recovery, and water safety.',
-    videoUrl: '/videos/IMG_5655.MOV',
+    videoUrl: '/videos/Kayaking.MOV',
   },
   {
-    label: 'Fire Skills and Campfire',
+    label: 'Setting up Fire',
     description: 'Oldcastle Campgrounds, covering fire building, safety training, and wood fire heat control.',
-    videoUrl: '/videos/IMG_5733.MOV',
+    videoUrl: '/videos/SettingupFire.MOV',
   },
   {
-    label: 'Wilderness Survival',
-    description: 'Pine Woods Reservation, covering shelter construction, fire building, and compass navigation.',
-    videoUrl: '/videos/IMG_5660.MOV',
+    label: 'Roasting Marshmallows',
+    description: 'Campfire traditions — winding down the evening together around the fire.',
+    videoUrl: '/videos/RoastingMarshmellows.MOV',
   },
 ];
 
@@ -26,37 +26,55 @@ const snapshotClips = [
     id: 1,
     title: 'Kayaking on the Water',
     category: 'Water Skills',
-    videoUrl: '/videos/IMG_5655.MOV',
+    videoUrl: '/videos/Kayaking.MOV',
   },
   {
     id: 2,
-    title: 'Fire in the Fire Pit',
+    title: 'Setting up Fire',
     category: 'Fire Skills',
-    videoUrl: '/videos/IMG_5733.MOV',
+    videoUrl: '/videos/SettingupFire.MOV',
   },
   {
     id: 3,
     title: 'Chopping Wood',
     category: 'Fire Preparation',
-    videoUrl: '/videos/IMG_5659.MOV',
+    videoUrl: '/videos/ChoppingWood.MOV',
   },
   {
     id: 4,
     title: 'Roasting Marshmallows',
     category: 'Campfire',
-    videoUrl: '/videos/IMG_5660.MOV',
+    videoUrl: '/videos/RoastingMarshmellows.MOV',
   },
   {
     id: 5,
     title: 'Serenity on the Lake',
     category: 'Nature',
-    videoUrl: '/videos/IMG_5656.MOV',
+    videoUrl: '/videos/OntheLake.MOV',
   },
   {
     id: 6,
     title: 'Boating at Speed',
     category: 'Water Skills',
-    videoUrl: '/videos/IMG_0083.mov',
+    videoUrl: '/videos/Boating.mov',
+  },
+  {
+    id: 7,
+    title: 'Dock Dueling',
+    category: 'Water Skills',
+    videoUrl: '/videos/DockDueling.mp4',
+  },
+  {
+    id: 8,
+    title: 'Fishing Catch and Release',
+    category: 'Outdoor Skills',
+    videoUrl: '/videos/Fishing.mp4',
+  },
+  {
+    id: 9,
+    title: 'Preparing for Cooking',
+    category: 'Outdoor Cooking',
+    videoUrl: '/videos/GeetingReadytoCook.MOV',
   },
 ];
 
@@ -207,8 +225,8 @@ export default function HomePage({ onNavigate, siteConfig }) {
             onTouchStart={() => setIsHovered(true)}
             onTouchEnd={() => setIsHovered(false)}
           >
-            {/* Video fills full width at 16:9 on desktop, taller on mobile */}
-            <div className="relative w-full aspect-[16/9] sm:aspect-[16/9] bg-stone-900">
+            {/* Vertical/portrait format — like phone footage */}
+            <div className="relative w-full aspect-[9/16] sm:aspect-[9/16] max-h-[75vh] bg-stone-900">
               <video
                 key={snapshotClips[snapshotIndex].videoUrl}
                 src={snapshotClips[snapshotIndex].videoUrl}
@@ -293,7 +311,7 @@ export default function HomePage({ onNavigate, siteConfig }) {
               {/* Hadith Block 2 — Archery */}
               <blockquote className="border-l-4 border-forest pl-4 bg-stone-50 py-3 pr-3">
                 <p className="text-sm text-stone-700 font-bold leading-relaxed italic">
-                  "Indeed, Allah will admit three into Paradise by a single arrow: its maker who seeks good in making it, the one who shoots it, and the one who holds arrows for him." The Prophet ﷺ also said: "Practice archery and practice riding. That you should practice archery is more beloved to me than that you should ride. Every leisure that a Muslim man engages in is false, except for his shooting of his bow, his training of his horse, and his playful interaction with his wife."
+                  "Indeed, Allah will admit three into Paradise by a single arrow: its maker who seeks good in making it, the one who shoots it, and the one who holds arrows for him."
                 </p>
                 <cite className="text-[10px] font-display font-black uppercase tracking-wider text-forest mt-1.5 block not-italic">
                   Sunan al-Tirmidhi 1637 / Jami al-Tirmidhi

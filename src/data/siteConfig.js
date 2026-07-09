@@ -8,7 +8,7 @@ export const initialSiteConfig = {
     tagline: "Our Vision",
     title: "Connecting with Allah's Creation",
     paragraph1: "School of Life helps community members connect deeply with the outdoors. The Prophet ﷺ encouraged physical readiness and outdoor skills like archery, swimming, and appreciation for the natural world. These activities build physical strength, mental resilience, and gratitude.",
-    paragraph2: "We provide structured camps where you can learn water safety, traditional archery, wilderness navigation, and outdoor cooking. Our activities help build self-reliance, teamwork, and spiritual awareness in nature.",
+    paragraph2: "We provide lessons in water safety, traditional archery, wilderness navigation, and outdoor cooking. Our activities help build self-reliance, teamwork, and spiritual awareness in nature.",
     paragraph3: "Every excursion, campfire, and challenge is designed to build character, patience, and community connection.",
   },
   timeline: {

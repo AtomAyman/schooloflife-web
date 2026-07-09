@@ -131,6 +131,11 @@ export default function AboutPage() {
                 title: 'Holistic Growth',
                 text: 'Physical skill meets character mentorship. We develop the whole person, not just the outdoorsman.',
               },
+              {
+                icon: <Heart className="w-6 h-6 text-forest" />,
+                title: 'Sunnah-Centered',
+                text: 'Every skill and expedition is rooted in the Prophetic tradition of physical readiness and spiritual awareness.',
+              },
             ].map((value) => (
               <div key={value.title} className="bg-canvas p-5 trail-border trail-shadow-sm rounded-sm hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#1C1917] transition-all duration-150">
                 <div className="w-12 h-12 bg-stone-100 border-2 border-stone-900 flex items-center justify-center mb-4 shadow-[2px_2px_0px_0px_#1C1917]">
