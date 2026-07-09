@@ -1,23 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, TreePine, Compass, Mountain } from 'lucide-react';
 
-// Hero carousel — all field clips cycle in the background
+// Hero carousel — 3 new field clips (not duplicated in Snapshots)
 const carouselSlides = [
-  {
-    label: 'Kayaking on the Water',
-    description: 'Windsor Waterfront Lakes, focusing on paddle control, capsize recovery, and water safety.',
-    videoUrl: '/videos/Kayaking.MOV',
-  },
-  {
-    label: 'Setting up Fire',
-    description: 'Oldcastle Campgrounds, covering fire building, safety training, and wood fire heat control.',
-    videoUrl: '/videos/SettingupFire.MOV',
-  },
-  {
-    label: 'Roasting Marshmallows',
-    description: 'Campfire traditions — winding down the evening together around the fire.',
-    videoUrl: '/videos/RoastingMarshmellows.MOV',
-  },
   {
     label: 'Dock Dueling',
     description: 'Testing balance, agility, and friendly competition out on the water.',
