@@ -1,4 +1,4 @@
-import { BookOpen, Heart, Users, Shield } from 'lucide-react';
+import { BookOpen, Heart, Users, Shield, Flame } from 'lucide-react';
 
 export default function AboutPage() {
   return (
@@ -21,13 +21,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Leadership Spotlight */}
+      {/* Visionary and Founder */}
       <section className="max-w-5xl mx-auto px-4 md:px-8 py-12 md:py-16">
         <div className="flex items-center gap-3 border-b-4 border-stone-900 pb-3 mb-10">
           <Shield className="w-7 h-7 text-forest" />
           <div>
             <h2 className="text-xl md:text-2xl font-display font-black tracking-tight text-forest m-0 uppercase">
-              Leadership Spotlight
+              Visionary and Founder
             </h2>
             <p className="text-stone-600 text-xs font-semibold">
               The vision and guidance behind the program.
@@ -51,10 +51,6 @@ export default function AboutPage() {
               <p className="text-xs font-display font-black uppercase tracking-widest text-campfire mt-1">
                 Founder &amp; Lead Director
               </p>
-
-              <div className="border-t-2 border-stone-200 mt-5 pt-5 text-xs text-stone-500 font-bold italic leading-relaxed w-full">
-                &ldquo;Nature is the greatest classroom — it teaches patience, humility, and gratitude for what Allah has created.&rdquo;
-              </div>
             </div>
           </div>
 
@@ -68,15 +64,15 @@ export default function AboutPage() {
                 </h2>
 
                 <p className="text-sm md:text-base text-stone-600 leading-relaxed font-semibold">
-                  Shaykh Aamir Azhar Zaidi is a community builder and educator based in Windsor, Ontario. He completed a diploma in Arabic at the Islamic University of Madinah in 2013, and graduated with a Bachelor of Arts in Arabic and Islamic Studies from the Faculty of Arabic Language. In 2019, he completed a post-graduate chaplaincy certification program through the department of academics in the Prophet’s Mosque. Upon returning to Canada, Shaykh Aamir completed his memorization of the Holy Qur’an.
+                  Shaykh Aamir Azhar Zaidi is a community builder and educator based in Windsor, Ontario. He completed a diploma in Arabic at the Islamic University of Madinah in 2013, and graduated with a Bachelor of Arts in Arabic and Islamic Studies from the Faculty of Arabic Language. In 2019, he completed a post-graduate chaplaincy certification through the department of academics at the Prophet's Mosque. Upon returning to Canada, Shaykh Aamir completed his memorization of the Holy Quran.
                 </p>
 
                 <p className="text-sm md:text-base text-stone-600 leading-relaxed font-semibold">
-                  Shaykh Aamir was inspired to start the School of Life after reflecting on the outdoor experiences he had in his childhood that the youth of today are no longer connected with. He recognized a growing disconnect: Muslim men and youth were increasingly removed from the physical, outdoor traditions that the Prophet ﷺ and the Companions embodied. Archery, swimming, and outdoor endurance were not merely hobbies in Islamic history—they were foundational disciplines.
+                  Shaykh Aamir was inspired to start School of Life after reflecting on outdoor experiences from his childhood that today's youth are no longer connected with. He recognized a growing gap: Muslim men and youth were increasingly removed from the physical, outdoor traditions that the Prophet ﷺ and the Companions embodied. Archery, swimming, and outdoor endurance were not hobbies in Islamic history. They were foundational disciplines that shaped character and community.
                 </p>
 
                 <p className="text-sm md:text-base text-stone-600 leading-relaxed font-semibold">
-                  Under his guidance, School of Life integrates outdoor skill-building—kayaking, archery, fishing, wilderness navigation, and outdoor cooking—with spiritual reflection and character development. Every expedition begins with intention-setting and ends with reflection, ensuring that the physical challenge is always grounded in a deeper purpose. Shaykh Aamir personally leads the curriculum design, oversees instructor training, and participates in every major camp and excursion to keep the program rooted in its spiritual mission.
+                  Under his guidance, School of Life integrates outdoor skill-building including kayaking, archery, fishing, wilderness navigation, and outdoor cooking with spiritual reflection and character development. Every expedition begins with intention-setting and ends with reflection, keeping the physical challenge grounded in a deeper purpose. Shaykh Aamir personally leads curriculum design, oversees instructor training, and joins every major camp to keep the program rooted in its mission.
                 </p>
               </div>
 
@@ -108,12 +104,12 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
               {
                 icon: <Heart className="w-6 h-6 text-campfire" />,
-                title: 'Sunnah-Centered',
-                text: 'Every skill and expedition is rooted in the Prophetic tradition of physical readiness and spiritual awareness.',
+                title: 'Tarbiyah',
+                text: 'Nurturing faith, character, and conduct through structured outdoor practice rooted in the Prophetic example.',
               },
               {
                 icon: <Users className="w-6 h-6 text-forest" />,
@@ -126,7 +122,12 @@ export default function AboutPage() {
                 text: 'Structured programs build consistency, self-reliance, and the mental toughness to face any terrain.',
               },
               {
-                icon: <BookOpen className="w-6 h-6 text-campfire" />,
+                icon: <Flame className="w-6 h-6 text-campfire" />,
+                title: 'Grit',
+                text: 'We train through difficulty on purpose. Endurance, resilience, and perseverance are built in the field, not in a classroom.',
+              },
+              {
+                icon: <BookOpen className="w-6 h-6 text-forest" />,
                 title: 'Holistic Growth',
                 text: 'Physical skill meets character mentorship. We develop the whole person, not just the outdoorsman.',
               },

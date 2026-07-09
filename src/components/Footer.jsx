@@ -19,8 +19,8 @@ export default function Footer({ setActiveTab }) {
             </div>
 
             <div className="mt-6 border-t border-stone-700 pt-3 text-stone-400 text-xs">
-              <span className="block font-bold">📆 Summer Camp: July 10 - August 22</span>
-              <span className="block font-bold mt-1 text-campfire">🤝 Age 18+ &bull; Limited Seats</span>
+              <span className="block font-bold">📆 Summer Session: July 10 - August 22</span>
+              <span className="block font-bold mt-1 text-campfire">🤝 Men 18+ &bull; Limited Seats</span>
             </div>
           </div>
 
@@ -34,7 +34,6 @@ export default function Footer({ setActiveTab }) {
                 { label: 'Home Page', tab: 'Home' },
                 { label: 'Upcoming Events', tab: 'Events' },
                 { label: 'About Our Mission', tab: 'About' },
-                { label: 'Apply Online', tab: 'Apply' },
               ].map((link) => (
                 <li key={link.label}>
                   <button
@@ -55,19 +54,7 @@ export default function Footer({ setActiveTab }) {
                   rel="noreferrer"
                   className="text-xs font-bold text-stone-700 hover:text-campfire no-underline hover:underline flex items-center gap-1"
                 >
-                  &raquo; Scouts Portal Login
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#admin"
-                  onClick={() => {
-                    setActiveTab('Admin');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="text-[9px] font-bold text-stone-400 hover:text-stone-600 no-underline hover:underline"
-                >
-                  &raquo; Administrator Access
+                  &raquo; App Login
                 </a>
               </li>
             </ul>

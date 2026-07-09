@@ -1,33 +1,73 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, TreePine, Compass, Mountain } from 'lucide-react';
 
+// Named clips with no emojis — titles reflect actual footage
 const carouselSlides = [
   {
-    label: 'Kayaking 2025',
-    icon: '🛶',
-    description: 'Windsor Waterfront Lakes, featuring paddle control, capsize recovery, and water safety training.',
+    label: 'Kayaking on the Water',
+    description: 'Windsor Waterfront Lakes, focusing on paddle control, capsize recovery, and water safety.',
     videoUrl: '/videos/IMG_5655.MOV',
   },
   {
     label: 'Fire Skills and Campfire',
-    icon: '🔥',
-    description: 'Oldcastle Campgrounds, focusing on fire building, safety training, and wood fire heat control.',
+    description: 'Oldcastle Campgrounds, covering fire building, safety training, and wood fire heat control.',
     videoUrl: '/videos/IMG_5733.MOV',
   },
   {
     label: 'Wilderness Survival',
-    icon: '🏕️',
     description: 'Pine Woods Reservation, covering shelter construction, fire building, and compass navigation.',
     videoUrl: '/videos/IMG_5660.MOV',
   },
 ];
 
+// Snapshots carousel — named clips based on actual footage
+const snapshotClips = [
+  {
+    id: 1,
+    title: 'Kayaking on the Water',
+    category: 'Water Skills',
+    videoUrl: '/videos/IMG_5655.MOV',
+  },
+  {
+    id: 2,
+    title: 'Fire in the Fire Pit',
+    category: 'Fire Skills',
+    videoUrl: '/videos/IMG_5733.MOV',
+  },
+  {
+    id: 3,
+    title: 'Chopping Wood',
+    category: 'Fire Preparation',
+    videoUrl: '/videos/IMG_5659.MOV',
+  },
+  {
+    id: 4,
+    title: 'Roasting Marshmallows',
+    category: 'Campfire',
+    videoUrl: '/videos/IMG_5660.MOV',
+  },
+  {
+    id: 5,
+    title: 'Serenity on the Lake',
+    category: 'Nature',
+    videoUrl: '/videos/IMG_5656.MOV',
+  },
+  {
+    id: 6,
+    title: 'Boating at Speed',
+    category: 'Water Skills',
+    videoUrl: '/videos/IMG_0083.mov',
+  },
+];
+
 export default function HomePage({ onNavigate, siteConfig }) {
   const [current, setCurrent] = useState(0);
-  const [selectedReel, setSelectedReel] = useState(null);
+  const [snapshotIndex, setSnapshotIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const total = carouselSlides.length;
+  const totalSnaps = snapshotClips.length;
 
-  // Auto-advance slide/video every 6 seconds
+  // Auto-advance hero video every 6 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % total);
@@ -35,13 +75,23 @@ export default function HomePage({ onNavigate, siteConfig }) {
     return () => clearInterval(timer);
   }, [total]);
 
+  // Auto-advance snapshots carousel every 5 seconds (pause on hover)
+  useEffect(() => {
+    if (isHovered) return;
+    const timer = setInterval(() => {
+      setSnapshotIndex((prev) => (prev + 1) % totalSnaps);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [totalSnaps, isHovered]);
+
   const goTo = (i) => setCurrent((i + total) % total);
+  const goToSnap = (i) => setSnapshotIndex((i + totalSnaps) % totalSnaps);
 
   return (
     <div className="pb-20">
-      {/* ─── Consolidated Video Hero and Carousel ─── */}
+      {/* ─── Consolidated Video Hero ─── */}
       <section className="relative bg-forest text-canvas border-b-4 border-stone-900 min-h-[500px] md:min-h-[580px] flex flex-col justify-between overflow-hidden">
-        {/* Background Video cycling through slides */}
+        {/* Background Video — reduced opacity so it's actually visible */}
         {carouselSlides[current].videoUrl && (
           <video
             key={carouselSlides[current].videoUrl}
@@ -50,14 +100,17 @@ export default function HomePage({ onNavigate, siteConfig }) {
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-25 mix-blend-multiply"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-40"
           />
         )}
-        
-        {/* Dot Pattern Overlay */}
-        <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
 
-        {/* Hero Content (Floating over video background) */}
+        {/* Subtle dark gradient overlay to keep text readable */}
+        <div className="absolute inset-0 bg-gradient-to-b from-forest/80 via-forest/50 to-stone-950/70 pointer-events-none" />
+
+        {/* Dot pattern */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
+
+        {/* Hero Content */}
         <div className="relative z-10 max-w-5xl w-full mx-auto px-4 md:px-8 pt-16 md:pt-20 flex-1 flex flex-col justify-center">
           <span className="inline-flex items-center gap-1.5 bg-campfire text-canvas border-2 border-stone-900 px-3 py-1 font-display font-black text-[10px] uppercase tracking-wider shadow-[2px_2px_0px_0px_#1C1917] mb-6 self-start">
             <TreePine className="w-3 h-3" /> {siteConfig.hero.tagline}
@@ -65,19 +118,13 @@ export default function HomePage({ onNavigate, siteConfig }) {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tight leading-[0.95] text-white max-w-3xl">
             {siteConfig.hero.title}
           </h1>
-          <p className="text-sm md:text-base text-stone-250 leading-relaxed font-semibold max-w-xl mt-6">
-            {siteConfig.hero.description}
+          <p className="text-sm md:text-base text-stone-200 leading-relaxed font-semibold max-w-2xl mt-6">
+            School of Life is a Tarbiyah-focused initiative designed to help our Muslim youth grow in faith, skill, and character through hands-on learning, outdoor education, and Sunnah-centered mentorship.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
             <button
-              onClick={() => onNavigate('Apply')}
-              className="bg-campfire text-canvas px-5 py-3 font-display font-black text-xs uppercase tracking-wider border-2 border-stone-900 shadow-[3px_3px_0px_0px_#1C1917] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#1C1917] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all duration-100 rounded-sm cursor-pointer"
-            >
-              Apply Online Now
-            </button>
-            <button
               onClick={() => onNavigate('Events')}
-              className="bg-forest text-canvas px-5 py-3 font-display font-black text-xs uppercase tracking-wider border-2 border-stone-900 shadow-[3px_3px_0px_0px_#1C1917] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#1C1917] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all duration-100 rounded-sm cursor-pointer"
+              className="bg-campfire text-canvas px-5 py-3 font-display font-black text-xs uppercase tracking-wider border-2 border-stone-900 shadow-[3px_3px_0px_0px_#1C1917] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#1C1917] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all duration-100 rounded-sm cursor-pointer"
             >
               Upcoming Events
             </button>
@@ -90,27 +137,26 @@ export default function HomePage({ onNavigate, siteConfig }) {
           </div>
         </div>
 
-        {/* Trail Dispatch Indicator Panel at the bottom of Hero */}
+        {/* Dispatch Indicator Panel */}
         <div className="relative z-10 w-full bg-stone-950/85 border-t-2 border-stone-900 py-3.5 px-4 md:px-8 mt-12 backdrop-blur-sm">
           <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
                 <span className="bg-campfire text-canvas border border-stone-900 px-2 py-0.5 text-[8px] font-display font-black uppercase tracking-wider">
-                  Field Dispatch
+                  Field Dispatches
                 </span>
                 <span className="text-[10px] text-stone-400 font-bold">
                   Clip: {current + 1} / {total}
                 </span>
               </div>
-              <h3 className="text-sm font-display font-black text-white uppercase tracking-wide flex items-center gap-1.5 pt-0.5">
-                <span className="text-base">{carouselSlides[current].icon}</span> {carouselSlides[current].label}
+              <h3 className="text-sm font-display font-black text-white uppercase tracking-wide pt-0.5">
+                {carouselSlides[current].label}
               </h3>
               <p className="text-xs text-stone-300 font-semibold max-w-2xl">
                 {carouselSlides[current].description}
               </p>
             </div>
 
-            {/* Slider Navigation Controls */}
             <div className="flex items-center gap-3 self-end md:self-center shrink-0">
               <button
                 onClick={() => goTo(current - 1)}
@@ -119,8 +165,6 @@ export default function HomePage({ onNavigate, siteConfig }) {
               >
                 <ChevronLeft className="w-4 h-4 text-stone-900" />
               </button>
-
-              {/* Dots */}
               <div className="flex gap-1.5">
                 {carouselSlides.map((_, i) => (
                   <button
@@ -133,7 +177,6 @@ export default function HomePage({ onNavigate, siteConfig }) {
                   />
                 ))}
               </div>
-
               <button
                 onClick={() => goTo(current + 1)}
                 className="w-8 h-8 bg-canvas border-2 border-stone-900 shadow-[1.5px_1.5px_0px_0px_#1C1917] flex items-center justify-center rounded-sm cursor-pointer hover:translate-x-[0.5px] hover:translate-y-[0.5px] hover:shadow-[1px_1px_0px_0px_#1C1917] active:shadow-none transition-all duration-100"
@@ -146,23 +189,76 @@ export default function HomePage({ onNavigate, siteConfig }) {
         </div>
       </section>
 
-      {/* ─── Field Reels (Vertical Videos) ─── */}
+      {/* ─── Snapshots Carousel ─── */}
       <section className="bg-canvas border-b-4 border-stone-900 py-16 md:py-20">
         <div className="max-w-5xl mx-auto px-4 md:px-8">
           <div className="text-center mb-10">
-            <span className="text-[10px] font-display font-black uppercase tracking-widest text-campfire">Expedition Reels</span>
+            <span className="text-[10px] font-display font-black uppercase tracking-widest text-campfire">Field Dispatches</span>
             <h2 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tight text-stone-900 mt-1">
-              Field Dispatches
+              Snapshots
             </h2>
-            <p className="text-xs text-stone-600 font-semibold mt-1">
-              Watch recent vertical dispatches from our outdoor sessions. Click any video card to play with sound.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reelsData.map((reel, index) => (
-              <ReelCard key={reel.id} reel={reel} onPlay={() => setSelectedReel(index)} />
-            ))}
+          {/* Carousel Container */}
+          <div
+            className="relative rounded-sm overflow-hidden trail-border trail-shadow"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onTouchStart={() => setIsHovered(true)}
+            onTouchEnd={() => setIsHovered(false)}
+          >
+            {/* Video fills full width at 16:9 on desktop, taller on mobile */}
+            <div className="relative w-full aspect-[16/9] sm:aspect-[16/9] bg-stone-900">
+              <video
+                key={snapshotClips[snapshotIndex].videoUrl}
+                src={snapshotClips[snapshotIndex].videoUrl}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+              />
+
+              {/* Bottom caption bar */}
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-stone-950/90 via-stone-950/50 to-transparent p-4 md:p-6">
+                <span className="text-[9px] font-display font-black uppercase tracking-widest text-campfire block mb-1">
+                  {snapshotClips[snapshotIndex].category}
+                </span>
+                <h3 className="text-lg md:text-2xl font-display font-black uppercase tracking-tight text-white leading-tight">
+                  {snapshotClips[snapshotIndex].title}
+                </h3>
+              </div>
+
+              {/* Prev/Next arrows */}
+              <button
+                onClick={() => goToSnap(snapshotIndex - 1)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-canvas/90 border-2 border-stone-900 shadow-[2px_2px_0px_0px_#1C1917] flex items-center justify-center rounded-sm cursor-pointer hover:bg-canvas active:shadow-none transition-all duration-100 z-10"
+                aria-label="Previous snapshot"
+              >
+                <ChevronLeft className="w-5 h-5 text-stone-900" />
+              </button>
+              <button
+                onClick={() => goToSnap(snapshotIndex + 1)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-canvas/90 border-2 border-stone-900 shadow-[2px_2px_0px_0px_#1C1917] flex items-center justify-center rounded-sm cursor-pointer hover:bg-canvas active:shadow-none transition-all duration-100 z-10"
+                aria-label="Next snapshot"
+              >
+                <ChevronRight className="w-5 h-5 text-stone-900" />
+              </button>
+            </div>
+
+            {/* Dot indicators */}
+            <div className="flex justify-center gap-2 py-4 bg-stone-100 border-t-2 border-stone-900">
+              {snapshotClips.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToSnap(i)}
+                  className={`w-2.5 h-2.5 border border-stone-900 rounded-sm cursor-pointer transition-all ${
+                    i === snapshotIndex ? 'bg-campfire shadow-[1px_1px_0px_0px_#1C1917]' : 'bg-stone-300 hover:bg-stone-400'
+                  }`}
+                  aria-label={`Go to snapshot ${i + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -179,9 +275,31 @@ export default function HomePage({ onNavigate, siteConfig }) {
               <h2 className="text-2xl md:text-3xl font-display font-black uppercase tracking-tight text-stone-900 leading-none">
                 {siteConfig.vision.title}
               </h2>
+
+              {/* Hadith Block 1 */}
+              <blockquote className="border-l-4 border-campfire pl-4 bg-stone-50 py-3 pr-3">
+                <p className="text-sm text-stone-700 font-bold leading-relaxed italic">
+                  "A strong believer is better and more beloved to Allah than a weak believer."
+                </p>
+                <cite className="text-[10px] font-display font-black uppercase tracking-wider text-campfire mt-1.5 block not-italic">
+                  Sahih Muslim 2664
+                </cite>
+              </blockquote>
+
               <p className="text-sm md:text-base text-stone-600 leading-relaxed font-semibold">
                 {siteConfig.vision.paragraph1}
               </p>
+
+              {/* Hadith Block 2 — Archery */}
+              <blockquote className="border-l-4 border-forest pl-4 bg-stone-50 py-3 pr-3">
+                <p className="text-sm text-stone-700 font-bold leading-relaxed italic">
+                  "Indeed, Allah will admit three into Paradise by a single arrow: its maker who seeks good in making it, the one who shoots it, and the one who holds arrows for him." The Prophet ﷺ also said: "Practice archery and practice riding. That you should practice archery is more beloved to me than that you should ride. Every leisure that a Muslim man engages in is false, except for his shooting of his bow, his training of his horse, and his playful interaction with his wife."
+                </p>
+                <cite className="text-[10px] font-display font-black uppercase tracking-wider text-forest mt-1.5 block not-italic">
+                  Sunan al-Tirmidhi 1637 / Jami al-Tirmidhi
+                </cite>
+              </blockquote>
+
               <p className="text-sm md:text-base text-stone-600 leading-relaxed font-semibold">
                 {siteConfig.vision.paragraph2}
               </p>
@@ -190,9 +308,8 @@ export default function HomePage({ onNavigate, siteConfig }) {
               </p>
             </div>
 
-            {/* Right Column: Timeline + Stats */}
+            {/* Right Column: Timeline + Pillars */}
             <div className="lg:col-span-5 space-y-6">
-              {/* Timeline Card */}
               <div className="bg-canvas p-6 trail-border trail-shadow rounded-sm">
                 <h3 className="text-xs font-display font-black uppercase tracking-wider text-campfire mb-4 flex items-center gap-1.5 border-b pb-2">
                   <Compass className="w-4 h-4" /> {siteConfig.timeline.title}
@@ -216,7 +333,6 @@ export default function HomePage({ onNavigate, siteConfig }) {
                 </div>
               </div>
 
-              {/* Pillars Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
                   { icon: '🏹', label: 'Archery and Marksmanship' },
@@ -249,215 +365,21 @@ export default function HomePage({ onNavigate, siteConfig }) {
             </p>
             <div className="pt-2 flex flex-wrap justify-center gap-3">
               <button
-                onClick={() => onNavigate('Apply')}
+                onClick={() => onNavigate('Events')}
                 className="bg-campfire text-canvas px-6 py-3 font-display font-black text-xs uppercase tracking-wider border-2 border-stone-900 shadow-[3px_3px_0px_0px_#1C1917] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#1C1917] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all duration-100 rounded-sm cursor-pointer"
               >
-                Apply Online Now
+                View Events Schedule
               </button>
               <button
-                onClick={() => onNavigate('Events')}
+                onClick={() => onNavigate('About')}
                 className="bg-transparent text-canvas px-6 py-3 font-display font-black text-xs uppercase tracking-wider border-2 border-canvas/40 hover:border-canvas hover:bg-white/10 transition-all duration-100 rounded-sm cursor-pointer"
               >
-                View Events Schedule
+                Our Mission
               </button>
             </div>
           </div>
         </div>
       </section>
-
-      {/* ─── Reel Modal Overlay ─── */}
-      {selectedReel !== null && (
-        <ReelModal
-          reel={reelsData[selectedReel]}
-          onClose={() => setSelectedReel(null)}
-        />
-      )}
-    </div>
-  );
-}
-
-const reelsData = [
-  {
-    id: 1,
-    title: 'Kayak Launch Drill',
-    category: 'Water Skills',
-    videoUrl: '/videos/IMG_5655.MOV',
-    poster: '🛶',
-  },
-  {
-    id: 2,
-    title: 'Paddling Technique',
-    category: 'Water Skills',
-    videoUrl: '/videos/IMG_5656.MOV',
-    poster: '🛶',
-  },
-  {
-    id: 3,
-    title: 'Wilderness Shelter Camp',
-    category: 'Survival Skills',
-    videoUrl: '/videos/IMG_5659.MOV',
-    poster: '⛺',
-  },
-  {
-    id: 4,
-    title: 'Gathering Firewood',
-    category: 'Survival Skills',
-    videoUrl: '/videos/IMG_5660.MOV',
-    poster: '🔥',
-  },
-  {
-    id: 5,
-    title: 'Campfire Reflection',
-    category: 'Brotherhood',
-    videoUrl: '/videos/IMG_5733.MOV',
-    poster: '💬',
-  },
-  {
-    id: 6,
-    title: 'Water Safety Training',
-    category: 'Water Skills',
-    videoUrl: '/videos/IMG_0083.mov',
-    poster: '🏊',
-  },
-];
-
-function ReelCard({ reel, onPlay }) {
-  const [hovered, setHovered] = useState(false);
-  const isWater = reel.category.toLowerCase().includes('water');
-  const isSurvival = reel.category.toLowerCase().includes('survival');
-  const overlayColor = isWater ? 'bg-forest/65' : isSurvival ? 'bg-campfire/65' : 'bg-stone-800/65';
-
-  return (
-    <div
-      onClick={onPlay}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="relative aspect-[9/16] bg-stone-900 border-4 border-stone-900 shadow-[4px_4px_0px_0px_#1C1917] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#1C1917] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none transition-all duration-150 rounded-sm overflow-hidden cursor-pointer group"
-    >
-      {/* Video plays continuously in background */}
-      <video
-        src={reel.videoUrl}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-      />
-
-      {/* Semi-transparent colored overlay that fades out on hover */}
-      <div className={`absolute inset-0 transition-opacity duration-300 ${overlayColor} ${hovered ? 'opacity-25' : 'opacity-100'}`} />
-
-      {/* Grid Pattern */}
-      <div className="absolute inset-0 opacity-[0.06] bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-
-      {/* Emoji and category overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-stone-200 pointer-events-none z-10">
-        <span className={`text-6xl transition-transform duration-200 ${hovered ? 'scale-110 opacity-90' : 'scale-100 opacity-80'}`}>
-          {reel.poster}
-        </span>
-        <span className="mt-4 font-display font-black text-[9px] uppercase tracking-wider bg-canvas text-stone-900 border border-stone-900 px-2.5 py-0.5 rounded-full shadow-[1px_1px_0px_0px_#1C1917]">
-          {reel.category}
-        </span>
-      </div>
-
-      {/* Bottom gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent pointer-events-none z-10" />
-
-      {/* Play Icon Hover Overlay */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-stone-950/20 z-20">
-        <div className="w-14 h-14 rounded-full bg-campfire border-2 border-stone-900 flex items-center justify-center shadow-[3px_3px_0px_0px_#1C1917] transform -translate-y-2 group-hover:translate-y-0 transition-transform duration-200">
-          <svg className="w-6 h-6 text-canvas fill-current ml-0.5" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </div>
-      </div>
-
-      {/* Card Details Text */}
-      <div className="absolute bottom-0 inset-x-0 p-4 space-y-1 text-canvas pointer-events-none z-20">
-        <span className="text-[8px] font-display font-black uppercase tracking-widest text-campfire bg-stone-900/60 px-2 py-0.5 rounded border border-stone-850">
-          {reel.category}
-        </span>
-        <h3 className="text-base font-display font-black uppercase tracking-tight leading-tight pt-1">
-          {reel.title}
-        </h3>
-      </div>
-    </div>
-  );
-}
-
-function ReelModal({ reel, onClose }) {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const videoRef = useRef(null);
-
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 z-[100] bg-stone-950/95 flex items-center justify-center p-4">
-      {/* Click outside to close */}
-      <div className="absolute inset-0 cursor-pointer" onClick={onClose} />
-
-      <div className="relative w-full max-w-sm aspect-[9/16] bg-stone-900 border-4 border-stone-900 shadow-[8px_8px_0px_0px_#D95D39] rounded-sm overflow-hidden flex flex-col justify-end">
-        {/* HTML5 Video Element */}
-        <video
-          ref={videoRef}
-          src={reel.videoUrl}
-          autoPlay
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-
-        {/* Video Controls overlay */}
-        <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-stone-950/90 via-stone-950/40 to-transparent flex flex-col gap-3 z-10">
-          <div className="flex items-start justify-between text-canvas">
-            <div>
-              <span className="text-[10px] font-display font-black uppercase tracking-widest text-campfire">
-                {reel.category}
-              </span>
-              <h3 className="text-xl font-display font-black uppercase tracking-tight">
-                {reel.title}
-              </h3>
-            </div>
-
-            {/* Play/Pause Control Button */}
-            <div className="flex gap-2">
-              <button
-                onClick={togglePlay}
-                className="w-10 h-10 bg-canvas border-2 border-stone-900 flex items-center justify-center rounded shadow-[2px_2px_0px_0px_#1C1917] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all cursor-pointer"
-                title={isPlaying ? 'Pause' : 'Play'}
-              >
-                {isPlaying ? (
-                  <svg className="w-5 h-5 text-stone-900 fill-current" viewBox="0 0 24 24">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5 text-stone-900 fill-current ml-0.5" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-20 w-10 h-10 bg-canvas border-2 border-stone-900 shadow-[3px_3px_0px_0px_#1C1917] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#1C1917] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all rounded-sm flex items-center justify-center cursor-pointer font-display font-black text-stone-900 text-sm"
-          title="Close video"
-        >
-          ✕
-        </button>
-      </div>
     </div>
   );
 }
