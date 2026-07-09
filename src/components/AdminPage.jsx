@@ -47,7 +47,7 @@ export default function AdminPage({ siteConfig, setSiteConfig, onBackToHome }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (username === 'admin' && password === 'windsor-scouts') {
+    if (username === 'admin' && password === 'editing-admin') {
       setIsAuthenticated(true);
       setLoginError('');
     } else {
